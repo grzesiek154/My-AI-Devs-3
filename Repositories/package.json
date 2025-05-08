@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "bun": "^1.1.34",
+    "promptfoo": "^0.95.0"
+  }
+}

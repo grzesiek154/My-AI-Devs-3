@@ -1,0 +1,110 @@
+Cele:
+
+1. Znalesc dane ktora zawieraja jakas informacje o schwytacnych ludziach lub o jakis sladach ich obecnosci
+2. Znalesc dane ktore zawiraja informacje o naprawionych usterkach hardware
+
+
+
+Restrictions:
+- Dane sa w roznych formatach i nie wszystkie zawieraja uzyteczne informacje
+- Pomijamy usterki zwiazane z software
+- Pomijamy katalog z faktami
+- Akceptujemy tylko informacje zawarte w celach
+
+
+Założenia:
+
+- Sprawdzic jaki rodzaj pliku jest aktualnie procesowany, i na podstawie tej infmajci uzyc odpowiedniego modelu openai
+eg. vision, gpt-4, lub jakis model do audio
+- Stworzyc prompt ktory okresli czy czy informacje zawarte w "Celach" znajduja sie w danym pliku
+
+
+To do:
+
+To manage costs better, you could:
+Keep the image resizing we implemented (reducing to 1024px max dimension)
+Add caching to avoid re-analyzing the same images
+Implement rate limiting to control the number of API calls
+Consider using a lower-resolution version of images when possible
+Add a sperate service for image managment:
+- inlucde token counting (prediction)
+- image resuzin to particular resilution
+- funtinality to test the cost of the image usage
+
+Factory Analyzer - Project Overview
+
+Core Functionality:
+1. File Analysis
+   - Images: Uses GPT-4 Vision to analyze visual content
+     * Detects people and hardware in images
+     * Provides detailed scene descriptions
+     * Handles image resizing for efficiency
+   - Audio: Uses Whisper for transcription
+     * Converts speech to text
+     * Analyzes transcribed content for relevant information
+     * Supports multiple audio formats (mp3, wav, ogg)
+   - Text: Uses GPT-4 for content analysis
+     * Summarizes and analyzes text content
+     * Identifies key information about people and hardware
+     * Handles various text formats (txt, md)
+
+2. Content Categorization
+   - People Category:
+     * Detects human presence in content
+     * Identifies traces of human activity
+     * Flags content with people-related information
+   - Hardware Category:
+     * Identifies hardware-related issues
+     * Focuses on physical equipment problems
+     * Excludes software-related issues
+
+3. Output Management
+   - Analysis Files:
+     * Creates individual .txt files for each analyzed content
+     * Stores file path, content type, and detailed description
+     * Includes error information if analysis fails
+   - Categorization:
+     * Maintains categories.json with sorted file lists
+     * Separate lists for people and hardware categories
+     * Alphabetically sorted for easy reference
+
+Architecture:
+1. FileService
+   - Handles file processing and analysis
+   - Manages file categorization
+   - Saves analysis results and categorization
+   - Supports parallel processing of files
+
+2. AIService
+   - Interfaces with OpenAI API
+   - Handles different content types (image, audio, text)
+   - Provides content analysis and description
+
+Key Improvements:
+1. Modular Analysis & Categorization
+   - Separated analysis and categorization logic
+   - Can run analysis and categorization independently
+   - Better error handling and logging
+
+2. Enhanced Output
+   - Detailed analysis saved in .txt files
+   - Structured categorization in JSON
+   - Clear console output with progress information
+
+3. Performance Optimizations
+   - Parallel file processing
+   - Efficient file type handling
+   - Proper error handling and recovery
+
+Usage:
+python main.py <command> <directory>
+Commands:
+- analyze    - Analyze files only
+- categorize - Categorize based on analysis
+- process    - Run full analysis and categorization
+
+Next Steps:
+1. Improve error handling for specific file types
+2. Add support for more file formats
+3. Implement analysis result caching
+4. Add progress tracking for large directories

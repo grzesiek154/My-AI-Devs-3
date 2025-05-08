@@ -1,0 +1,4 @@
+Steps to Solve the Task
+Build Context from Transcripts: Concatenate the transcripts to build a context for your prompt.
+Query the Model: Use the context to ask the model about the street where Andrzej Maj's university is located.
+5. Send the Report: Send the obtained answer to the central server using an HTTP POST request.

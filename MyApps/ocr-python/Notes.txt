@@ -1,0 +1,4 @@
+Allign newly created by composer openAIService with the existing openAIService in the audio-python project
+    maybe include langfuse usage
+
+    
